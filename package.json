@@ -1,0 +1,21 @@
+{
+  "name": "egyan_lms",
+  "version": "1.0.0",
+  "description": "Egyan Learning Management System",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "js",
+    "express"
+  ],
+  "author": "Arjun Manipes",
+  "license": "MIT license",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  }
+}
