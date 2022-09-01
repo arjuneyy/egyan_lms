@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
-var db = require('./config/mongodb').connect()
+var db = require('./config/mongoose')
+
+// Connect mongoDb
+db.connect()
 
 const API_PREFIX = '/api'
 

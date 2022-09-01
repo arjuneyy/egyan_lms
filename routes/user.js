@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var UserModel = require('../models/user').UserModel;
 
-var userService = require('../services/userService').UserService;
 
 // User Login
 router.post('/login', (req, res) => {
@@ -9,14 +9,30 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/users', (req, res) => {
-    userService.getUsers((data) => {
-        res.send(data);
+    UserModel.find().exec((err, result) => {
+        res.send(result);
     });
 });
 
 // User Registration
 // Must implement GET? and POST
 router.post('/register', (req, res) => {
+    // const user = new UserModel({
+    //     fullname: "Arjun",
+    //     type: "instructor",
+    //     email: "armanipes@gmail.com",
+    //     password: "admin123"
+    // });
+
+    // user.save()
+    //     .then(() => {
+    //         console.log("Successfully saved.");
+    //         res.send("Successfully saved.");
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+
     res.send('User registration');
 });
 
