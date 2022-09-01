@@ -7,6 +7,9 @@ db.connect()
 
 const API_PREFIX = '/api'
 
+// Middleware
+app.use(express.json());
+
 // Routes
 var healthRouter = require('./routes/health');
 var courseRouter = require('./routes/course');

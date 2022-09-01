@@ -17,23 +17,28 @@ router.get('/users', (req, res) => {
 // User Registration
 // Must implement GET? and POST
 router.post('/register', (req, res) => {
-    // const user = new UserModel({
-    //     fullname: "Arjun",
-    //     type: "instructor",
-    //     email: "armanipes@gmail.com",
-    //     password: "admin123"
-    // });
+    const user = new UserModel({
+        fullname: req.body.fullname,
+        type: req.body.type,
+        email: req.body.email,
+        password: req.body.password
+    });
 
-    // user.save()
-    //     .then(() => {
-    //         console.log("Successfully saved.");
-    //         res.send("Successfully saved.");
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     });
-
-    res.send('User registration');
+    user.save()
+        .then(() => {
+            res.send({ 'message': 'User has been successfully registered.' });
+        })
+        .catch(err => {
+            if (err.name === 'ValidationError') {
+                error = Object.values(err.errors).map(val => val.message);
+                res.status(400).send({ 'message': error })
+                return;
+            } else if (err.name === 'MongoServerError' && err.code === 11000) {
+                res.status(400).send({ 'message': 'Email must be unique.' });
+                return;
+            }
+            res.status(500).send(err);
+        });
 });
 
 // --- User Profile ---
