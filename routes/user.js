@@ -1,9 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
+var userService = require('../services/userService').UserService;
+
 // User Login
 router.post('/login', (req, res) => {
     res.send('User Login');
+});
+
+router.get('/users', (req, res) => {
+    userService.getUsers((data) => {
+        res.send(data);
+    });
 });
 
 // User Registration
@@ -25,5 +33,6 @@ router.put('/changeProfile/:id', (req, res) => {
 router.put('/changePassword', (req, res) => {
     res.send('Password has been updated.');
 });
+
 
 module.exports = router;
