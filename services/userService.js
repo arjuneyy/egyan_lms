@@ -36,9 +36,38 @@ async function login(email, password) {
     return user;
 }
 
+async function update(id, fullname, type, email, password) {
+    try {
+        let foundUsers = await findById(id);
+        if (!foundUsers) throw `User with id '${id}' not found.`;
+
+        const userData = {
+            fullname: fullname,
+            type: type,
+            email: email,
+            password: password
+        };
+        const validateUserData = new UserModel(userData);
+        let errors = validateUserData.validateSync();
+        if (errors) throw errors;
+
+        return await UserModel.findByIdAndUpdate({ '_id': id }, userData, { new: true });
+    } catch (err) {
+        if (err.name === 'ValidationError') {
+            error = Object.values(err.errors).map(val => val.message);
+            throw error;
+        } else if (err.name === 'MongoServerError' && err.code === 11000) {
+            throw 'Email must be unique.';
+        } else {
+            throw err;
+        }
+    }
+}
+
 module.exports = {
     create,
     findAll,
     findById,
-    login
+    login,
+    update
 }

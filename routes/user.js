@@ -31,7 +31,7 @@ router.post('/register', (req, res) => {
             'result': user,
             'message': 'User has been successfuly registered.'
         }))
-        .catch((error) => res.status(400).send({ 'message': error }))
+        .catch((error) => res.status(400).send({ 'message': error }));
 });
 
 // --- User Profile ---
@@ -45,7 +45,13 @@ router.get('/editProfile/:id', (req, res) => {
 });
 
 router.put('/changeProfile/:id', (req, res) => {
-    res.send('Profile has been updated.');
+    const { fullname, type, email, password } = req.body
+    userService.update(req.params.id, fullname, type, email, password)
+        .then((user) => res.send({
+            'result': user,
+            'message': 'User has been successfuly updated.'
+        }))
+        .catch((error) => res.status(400).send({ 'message': error }));
 });
 
 router.put('/changePassword', (req, res) => {
