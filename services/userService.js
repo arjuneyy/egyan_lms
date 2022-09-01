@@ -10,8 +10,7 @@ async function create(fullname, type, email, password) {
     });
 
     try {
-        const savedUser = await user.save();
-        return 'User has been successfully registered.'
+        return await user.save();
     } catch (err) {
         if (err.name === 'ValidationError') {
             error = Object.values(err.errors).map(val => val.message);
@@ -30,8 +29,16 @@ async function findById(id) {
     return await UserModel.findById(id);
 }
 
+async function login(email, password) {
+    const user = await UserModel.findOne({ email: email, password: password });
+    if (!user) throw 'Invalid email and/or password.';
+
+    return user;
+}
+
 module.exports = {
     create,
     findAll,
-    findById
+    findById,
+    login
 }

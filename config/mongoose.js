@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const username = 'egyan';
 const password = 'egyan123';
 const dbName = 'egyandb';
-const url = `mongodb://${username}:${password}@192.168.55.124:27017/${dbName}?authSource=admin`;
+const url = `mongodb://${username}:${password}@localhost:27017/${dbName}?authSource=admin`;
 
 function connect() {
     mongoose.connect(url, { useNewUrlParser: true })

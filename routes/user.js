@@ -6,12 +6,19 @@ var userService = require('../services/userService');
 
 // User Login
 router.post('/login', (req, res) => {
-    res.send('User Login');
+    userService.login(req.body.email, req.body.password)
+        .then((user) => {
+            res.send({
+                'result': user,
+                'message': 'Successfully logged in.'
+            });
+        })
+        .catch((err) => res.status(400).send({ 'message': err }))
 });
 
 router.get('/users', (req, res) => {
     userService.findAll()
-        .then((data) => res.send(data))
+        .then((data) => res.send({ 'result': data }))
         .catch((err) => res.status(400).send({ 'message': err }));
 });
 
@@ -20,7 +27,10 @@ router.get('/users', (req, res) => {
 router.post('/register', (req, res) => {
     const { fullname, type, email, password } = req.body
     userService.create(fullname, type, email, password)
-        .then((success) => res.send({ 'message': success }))
+        .then((user) => res.send({
+            'result': user,
+            'message': 'User has been successfuly registered.'
+        }))
         .catch((error) => res.status(400).send({ 'message': error }))
 });
 
@@ -29,7 +39,7 @@ router.post('/register', (req, res) => {
 router.get('/editProfile/:id', (req, res) => {
     userService.findById(req.params.id)
         .then(
-            (data) => res.send(data),
+            (data) => res.send({ 'result': data }),
             (error) => res.status(400).send({ 'message': error })
         )
 });
