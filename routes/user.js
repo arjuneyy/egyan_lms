@@ -11,10 +11,8 @@ router.post('/login', (req, res) => {
 
 router.get('/users', (req, res) => {
     userService.findAll()
-        .then(
-            (data) => res.send(data),
-            (err) => res.status(400).send(err)
-        );
+        .then((data) => res.send(data))
+        .catch((err) => res.status(400).send({ 'message': err }));
 });
 
 // User Registration
@@ -22,17 +20,14 @@ router.get('/users', (req, res) => {
 router.post('/register', (req, res) => {
     const { fullname, type, email, password } = req.body
     userService.create(fullname, type, email, password)
-        .then(
-            (success) => res.send({ 'message': success }),
-            (fail) => res.status(400).send({ 'message': fail })
-        );
+        .then((success) => res.send({ 'message': success }))
+        .catch((error) => res.status(400).send({ 'message': error }))
 });
 
 // --- User Profile ---
 // Update Profile
 router.get('/editProfile/:id', (req, res) => {
-    const id = req.params.id;
-    userService.findById(id)
+    userService.findById(req.params.id)
         .then(
             (data) => res.send(data),
             (error) => res.status(400).send({ 'message': error })
