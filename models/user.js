@@ -12,7 +12,8 @@ const userSchema = mongoose.Schema({
     },
     type: {
         type: String,
-        required: [true, 'User type is required.']
+        required: [true, 'User type is required.'],
+        enum: ['Instructor', 'Student']
     },
     email: {
         type: String,
@@ -26,6 +27,5 @@ const userSchema = mongoose.Schema({
     }
 })
 
-const User = mongoose.model('User', userSchema);
 
-module.exports.UserModel = User;
+module.exports.UserModel = mongoose.model('User', userSchema);

@@ -1,4 +1,6 @@
+// @ts-nocheck
 var UserModel = require('../models/user').UserModel;
+var passwordService = require('../services/passwordService');
 
 
 async function create(fullname, type, email, password) {
@@ -6,7 +8,7 @@ async function create(fullname, type, email, password) {
         fullname: fullname,
         type: type,
         email: email,
-        password: password
+        password: await passwordService.hash(password)
     });
 
     try {
@@ -30,8 +32,14 @@ async function findById(id) {
 }
 
 async function login(email, password) {
-    const user = await UserModel.findOne({ email: email, password: password });
-    if (!user) throw 'Invalid email and/or password.';
+    let loginResult = true;
+    const user = await UserModel.findOne({ email: email });
+
+    if (user) {
+        loginResult = await passwordService.verify(password, user.password);
+    }
+
+    if (!user || !loginResult) throw 'Invalid email and/or password.';
 
     return user;
 }
@@ -64,10 +72,23 @@ async function update(id, fullname, type, email, password) {
     }
 }
 
+async function deleteUser(id) {
+    try {
+        let foundUsers = await findById(id);
+        if (!foundUsers) throw `User with id '${id}' not found.`;
+
+        await UserModel.deleteOne({ _id: id });
+        return `User with id '${id}' successfully deleted.`;
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
     create,
     findAll,
     findById,
     login,
-    update
+    update,
+    deleteUser
 }

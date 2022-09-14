@@ -54,6 +54,14 @@ router.put('/changeProfile/:id', (req, res) => {
         .catch((error) => res.status(400).send({ 'message': error }));
 });
 
+router.delete('/user/:id', (req, res) => {
+    userService.deleteUser(req.params.id)
+        .then(
+            (msg) => res.send({ 'message': msg }),
+            (error) => res.status(400).send({ 'message': error })
+        )
+});
+
 router.put('/changePassword', (req, res) => {
     res.send('Password has been updated.');
 });
