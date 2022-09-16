@@ -2,7 +2,7 @@
   "name": "egyan_lms",
   "version": "1.0.0",
   "description": "Egyan Learning Management System",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,8 @@
   "license": "MIT license",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bootstrap": "^5.2.1",
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
     "mongodb": "^4.9.1",
     "mongoose": "^6.5.4",
