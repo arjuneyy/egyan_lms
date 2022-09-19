@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
-const db = require('./config/mongoose')
-const path = require('path')
+const db = require('./config/mongoose');
+const path = require('path');
+const bodyParser = require('body-parser');
 
 // Connect mongoDB
 db.connect()
@@ -15,6 +16,8 @@ app.use(
     express.static(path.join(__dirname, "node_modules/")),
     express.static(path.join(__dirname, "/"))
 );
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // API Routes
 var healthRouter = require('./routes/health');

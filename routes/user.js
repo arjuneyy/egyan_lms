@@ -25,13 +25,17 @@ router.get('/users', (req, res) => {
 // User Registration
 // Must implement GET? and POST
 router.post('/register', (req, res) => {
+    console.log("BODY:-", req.body);
     const { fullname, type, email, password } = req.body
     userService.create(fullname, type, email, password)
         .then((user) => res.send({
             'result': user,
             'message': 'User has been successfuly registered.'
         }))
-        .catch((error) => res.status(400).send({ 'message': error }));
+        .catch((error) => {
+            res.status(400).send({ 'message': error })
+            console.log(error)
+        });
 });
 
 // --- User Profile ---

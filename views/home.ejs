@@ -34,18 +34,18 @@
                 <div class="d-flex justify-content-xl-center space-between p-4 ">
                     <div class="d-flex flex-column container sign-up">
                         <h4>New to EGyan? Sign up for free!</h4>
-                        <form class="form-signin needs-validation" novalidate>
+                        <form class="form-signin needs-validation" action="/api/register" method="post" novalidate>
                             <div class="d-flex justify-content-md-between space-between">
                                 <div class="form-group">
                                     <label for="fullname" class="form-label">Full name </label>
-                                    <input id="fullname" type="text" class="form-control" required />
+                                    <input id="fullname" name="fullname" type="text" class="form-control" required />
                                     <div class="invalid-feedback">
                                         Fullname is required.
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="type" class="form-label">Type </label>
-                                    <input id="type" type="text" class="form-control" required />
+                                    <input id="type" name="type" type="text" class="form-control" required />
                                     <div class="invalid-feedback">
                                         User type is required.
                                     </div>
@@ -53,8 +53,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">Email ID </label>
-                                <input id="email" type="email" class="form-control" placeholder="you@example.com"
-                                    required />
+                                <input id="email" name="email" type="email" class="form-control"
+                                    placeholder="you@example.com" required />
                                 <div class="invalid-feedback">
                                     Invalid email address.
                                 </div>
@@ -62,7 +62,8 @@
                             <div class="d-flex justify-content-md-between">
                                 <div class="form-group">
                                     <label for="password1" class="form-label">Password </label>
-                                    <input id="password1" type="password" class="form-control" required />
+                                    <input id="password1" name="password" type="password" class="form-control"
+                                        required />
                                     <div class="invalid-feedback">
                                         Password is required.
                                     </div>
