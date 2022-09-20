@@ -16,21 +16,20 @@ app.use(
     express.static(path.join(__dirname, "node_modules/")),
     express.static(path.join(__dirname, "/"))
 );
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // API Routes
+var homeRouter = require('./routes/home');
 var healthRouter = require('./routes/health');
 var courseRouter = require('./routes/course');
 var userRouter = require('./routes/user');
 
 app.use(`${API_PREFIX}/health`, healthRouter);
-app.use(`${API_PREFIX}`, courseRouter);
 app.use(`${API_PREFIX}`, userRouter);
-
-// Views Routes
-var homeRouter = require('./routes/views/home');
+app.use(`${API_PREFIX}`, courseRouter);
 app.use('/', homeRouter);
+
 
 
 module.exports = app;

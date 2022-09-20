@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning Management System</title>
+    <%- include('../partials/assets.ejs'); %>
+</head>
+
+<body>
+    <% if (typeof isSuccess !== 'undefined' && isSuccess) { %>
+        <script>
+            swal("User has been registered", {
+                icon: "success"
+            });
+        </script>
+    <% } %>
+
+    <header class="p-3 text-bg-dark">
+        <div class="d-flex flex-wrap align-items-center justify-content-center">
+            <h4>
+                <a href="/" class="d-flex align-items-center text-white text-decoration-none">
+                    EGyan
+                </a>
+            </h4>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="#" class="nav-link px-2 text-secondary">Login</a></li>
+                <li><a href="#" class="nav-link px-2 text-secondary">My Dashboard</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="wrapper bg-light">
+        <div class="d-flex flex-wrap justify-content-center p-4">
+            <div class="card sign-up-card">
+                <div class="d-flex justify-content-xl-center space-between p-4 ">
+                    <div class="d-flex flex-column container sign-up">
+                        <h4>New to EGyan? Sign up for free!</h4>
+                        <form class="form-signin" action="/register" method="POST" novalidate>
+                            <div class="d-flex justify-content-md-between space-between">
+                                <div class="form-group">
+                                    <label for="fullname" class="form-label">Full name </label>
+                                    <input id="fullname" name="fullname" type="text"
+                                        value="<%= typeof form !== 'undefined' ? form.fullname : '' %>"
+                                        class="form-control <%= (typeof errors !== 'undefined' && 'fullname' in errors) ? 'is-invalid' : '' %>"
+                                        required />
+                                    <% if (typeof errors !== 'undefined' && 'fullname' in errors) { %>
+                                        <div class="invalid-feedback">
+                                            <% if (errors['fullname'].length >= 1) { %>
+                                                <%= errors['fullname'][0] %>
+                                            <% } %> 
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <div class="form-group">
+                                    <label for="type" class="form-label">Type </label>
+                                    <input id="type" name="type" type="text" 
+                                        value="<%= typeof form !== 'undefined' ? form.type : '' %>"
+                                        class="form-control <%= (typeof errors !== 'undefined' && 'type' in errors) ? 'is-invalid' : '' %>" required />
+                                        <% if (typeof errors !== 'undefined' && 'type' in errors) { %>
+                                            <div class="invalid-feedback">
+                                                <% if (errors['type'].length >= 1) { %>
+                                                    <%= errors['type'][0] %>
+                                                <% } %> 
+                                            </div>
+                                        <% } %>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email ID </label>
+                                <input id="email" name="email" type="email"
+                                    value="<%= typeof form !== 'undefined' ? form.email : '' %>"
+                                    placeholder="you@example.com" 
+                                    class="form-control <%= (typeof errors !== 'undefined' && 'email' in errors) ? 'is-invalid' : '' %>" required />
+                                    <% if (typeof errors !== 'undefined' && 'email' in errors) { %>
+                                        <div class="invalid-feedback">
+                                            <% if (errors['email'].length >= 1) { %>
+                                                <%= errors['email'][0] %>
+                                            <% } %> 
+                                        </div>
+                                    <% } %>
+                            </div>
+                            <div class="d-flex justify-content-md-between">
+                                <div class="form-group">
+                                    <label for="password" class="form-label">Password </label>
+                                    <input id="password" name="password" type="password" 
+                                        value="<%= typeof form !== 'undefined' ? form.password : '' %>"
+                                        class="form-control <%= (typeof errors !== 'undefined' && 'password' in errors) ? 'is-invalid' : '' %>" required />
+                                        <% if (typeof errors !== 'undefined' && 'password' in errors) { %>
+                                            <div class="invalid-feedback">
+                                                <% if (errors['password'].length >= 1) { %>
+                                                    <%= errors['password'][0] %>
+                                                <% } %> 
+                                            </div>
+                                        <% } %>
+                                </div>
+                                <div class="form-group confirm-password">
+                                    <label for="passwordConfirmation" class="form-label">Confirm Password </label>
+                                    <input id="passwordConfirmation" name="passwordConfirmation" type="password"
+                                        value="<%= typeof form !== 'undefined' ? form.passwordConfirmation : '' %>"
+                                        class="form-control <%= (typeof errors !== 'undefined' && 'passwordConfirmation' in errors) ? 'is-invalid' : '' %>" required />
+                                        <% if (typeof errors !== 'undefined' && 'passwordConfirmation' in errors) { %>
+                                            <div class="invalid-feedback">
+                                                <% if (errors['passwordConfirmation'].length >= 1) { %>
+                                                    <%= errors['passwordConfirmation'][0] %>
+                                                <% } %> 
+                                            </div>
+                                        <% } %>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <button type="submit" class="btn btn-lg btn-primary">Register Now!</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="d-flex flex-column container login">
+                        <h4>Have An Account? Log in Now!</h4>
+                        <form>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email ID </label>
+                                <input id="loginEmail" type="text" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="form-label">Password </label>
+                                <input id="password" type="password" class="form-control" />
+                            </div>
+                            <div class="d-flex flex-column">
+                                <button type="submit" class="btn btn-lg btn-primary"> Login </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

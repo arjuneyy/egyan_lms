@@ -13,7 +13,10 @@ const userSchema = mongoose.Schema({
     type: {
         type: String,
         required: [true, 'User type is required.'],
-        enum: ['Instructor', 'Student']
+        enum: {
+            values: ['Instructor', 'Student'],
+            message: 'Type should either be a Student or Instructor.'
+        }
     },
     email: {
         type: String,

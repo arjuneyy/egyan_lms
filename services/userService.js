@@ -15,7 +15,9 @@ async function create(fullname, type, email, password) {
         return await user.save();
     } catch (err) {
         if (err.name === 'ValidationError') {
-            error = Object.values(err.errors).map(val => val.message);
+            error = Object.values(err.errors).map(val => {
+                return { 'value': val.value, 'path': val.path, 'msg': val.properties.message };
+            });
             throw error;
         } else if (err.name === 'MongoServerError' && err.code === 11000) {
             throw 'Email must be unique.';
@@ -29,6 +31,11 @@ async function findAll() {
 
 async function findById(id) {
     return await UserModel.findById(id);
+}
+
+
+async function findByEmail(email) {
+    return await UserModel.findOne({ email });
 }
 
 async function login(email, password) {
@@ -88,6 +95,7 @@ module.exports = {
     create,
     findAll,
     findById,
+    findByEmail,
     login,
     update,
     deleteUser
