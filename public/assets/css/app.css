@@ -10,11 +10,3 @@ body {
 .sign-up-card div.form-group {
     margin-top: 10px;
 }
-
-.sign-up-card div.container div.d-flex>button {
-    margin-top: 15px;
-}
-
-.sign-up-card div.justify-content-md-between .form-group:last-child {
-    padding-left: 10px;
-}

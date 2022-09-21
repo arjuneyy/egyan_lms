@@ -4,10 +4,6 @@ const { check, validationResult } = require('express-validator');
 var userService = require('../services/userService');
 
 
-router.get('/', (req, res) => {
-    res.render('pages/home');
-});
-
 const registrationValidation = [
     check('fullname')
         .trim()
@@ -47,6 +43,26 @@ const registrationValidation = [
             }
         })
 ];
+
+const loginValidation = [
+    check('loginEmailId')
+        .notEmpty()
+        .withMessage('Email is required.')
+        .isEmail()
+        .withMessage('Invalid email address.'),
+    check('loginPassword')
+        .notEmpty()
+        .withMessage('Password is required.')
+];
+
+router.get('/', (req, res) => {
+    res.render('pages/home');
+});
+
+router.get('/register', (req, res) => {
+    res.render('pages/home');
+});
+
 
 router.post('/register', registrationValidation, (req, res) => {
     var errors = {};
@@ -88,5 +104,46 @@ router.post('/register', registrationValidation, (req, res) => {
             });
     }
 });
+
+router.post('/login', loginValidation, (req, res) => {
+    const loginValidationRes = validationResult(req);
+
+    if (!loginValidationRes.isEmpty()) {
+        var errors = {};
+        loginValidationRes.array().forEach(err => {
+            if (err['param'] in errors) {
+                errors[err['param']].push(err['msg']);
+            } else {
+                errors[err['param']] = [err.msg];
+            }
+        });
+
+        res.render('pages/home', {
+            errors: errors,
+            form: {
+                ...req.body
+            }
+        });
+    } else {
+        userService.login(req.body.loginEmailId, req.body.loginPassword)
+            .then((user) => {
+                res.send({
+                    'result': user,
+                    'message': 'Successfully logged in.'
+                });
+            })
+            .catch((error) => {
+                res.render('pages/home', {
+                    errors: {
+                        message: error,
+                        form: {
+                            ...req.body
+                        }
+                    }
+                })
+            })
+    }
+});
+
 
 module.exports = router;

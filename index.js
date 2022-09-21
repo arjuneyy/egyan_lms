@@ -31,5 +31,4 @@ app.use(`${API_PREFIX}/health`, healthRouter);
 app.use(`${API_PREFIX}`, homeRouter);
 
 
-
 module.exports = app;

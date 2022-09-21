@@ -9,47 +9,49 @@
 </head>
 
 <body>
-    <%- include('../partials/alert.ejs'); %>
+    <div>
+        <%- include('../partials/alert.ejs'); %>
+    </div>
 
-        <header class="p-3 text-bg-dark">
-            <div class="d-flex flex-wrap align-items-center justify-content-center">
-                <h4>
-                    <a href="/" class="d-flex align-items-center text-white text-decoration-none">
-                        EGyan
-                    </a>
-                </h4>
+    <header class="p-3 text-bg-dark">
+        <div class="d-flex flex-wrap align-items-center justify-content-center">
+            <h4>
+                <a href="/" class="d-flex align-items-center text-white text-decoration-none">
+                    EGyan
+                </a>
+            </h4>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 text-secondary">Login</a></li>
-                    <li><a href="#" class="nav-link px-2 text-secondary">My Dashboard</a></li>
-                </ul>
-            </div>
-        </header>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="#" class="nav-link px-2 text-secondary">Login</a></li>
+                <li><a href="#" class="nav-link px-2 text-secondary">My Dashboard</a></li>
+            </ul>
+        </div>
+    </header>
 
-        <div class="wrapper bg-light">
-            <div class="d-flex flex-wrap justify-content-center p-4">
-                <div class="card sign-up-card">
-                    <div class="d-flex justify-content-xl-center space-between p-4 ">
-                        <div class="d-flex flex-column container sign-up">
-                            <h4>New to EGyan? Sign up for free!</h4>
-                            <form class="form-signin" action="/api/register" method="POST" novalidate>
-                                <div class="d-flex justify-content-md-between space-between">
-                                    <div class="form-group">
-                                        <label for="fullname" class="form-label">Full name </label>
-                                        <input id="fullname" name="fullname" type="text"
-                                            value="<%= typeof form !== 'undefined' ? form.fullname : '' %>"
-                                            class="form-control <%= (typeof errors !== 'undefined' && 'fullname' in errors) ? 'is-invalid' : '' %>"
-                                            required />
-                                        <% if (typeof errors !== 'undefined' && 'fullname' in errors) { %>
-                                        <div class="invalid-feedback">
-                                            <% if (errors['fullname'].length >= 1) { %>
-                                                <%= errors['fullname'][0] %>
-                                            <% } %> 
-                                        </div>
-                                    <% } %>
+    <div class="wrapper bg-light">
+        <div class="d-flex flex-wrap justify-content-center p-4">
+            <div class="card sign-up-card">
+                <div class="row p-4 ">
+                    <div class="col-md-6">
+                        <h4>New to EGyan? Sign up for free!</h4>
+                        <form class="form-signin" action="/api/register" method="POST" novalidate>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="fullname" class="form-label">Full name </label>
+                                    <input id="fullname" name="fullname" type="text"
+                                        value="<%= typeof form !== 'undefined' ? form.fullname : '' %>"
+                                        class="form-control <%= (typeof errors !== 'undefined' && 'fullname' in errors) ? 'is-invalid' : '' %>"
+                                        required />
+                                    <% if (typeof errors !== 'undefined' && 'fullname' in errors) { %>
+                                            <div class="invalid-feedback">
+                                                <% if (errors['fullname'].length >= 1) { %>
+                                                    <%= errors['fullname'][0] %>
+                                                <% } %> 
+                                            </div>
+                                        <% } %>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-md-6">
                                     <label for="type" class="form-label">Type </label>
                                     <select class="form-select <%= (typeof errors !== 'undefined' && 'type' in errors) ? 'is-invalid' : '' %>" name="type"required>
                                         <option <%= typeof form !== 'undefined' && form.type === '1' ? 'selected' : '' %> value="1">Instructor</option>
@@ -64,22 +66,24 @@
                                     <% } %>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="email" class="form-label">Email ID </label>
-                                <input id="email" name="emailId" type="email"
-                                    value="<%= typeof form !== 'undefined' ? form.emailId : '' %>"
-                                    placeholder="you@example.com" 
-                                    class="form-control <%= (typeof errors !== 'undefined' && 'emailId' in errors) ? 'is-invalid' : '' %>" required />
-                                    <% if (typeof errors !== 'undefined' && 'emailId' in errors) { %>
-                                        <div class="invalid-feedback">
-                                            <% if (errors['emailId'].length >= 1) { %>
-                                                <%= errors['emailId'][0] %>
-                                            <% } %> 
-                                        </div>
-                                    <% } %>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="email" class="form-label">Email ID </label>
+                                    <input id="email" name="emailId" type="email"
+                                        value="<%= typeof form !== 'undefined' ? form.emailId : '' %>"
+                                        placeholder="you@example.com" 
+                                        class="form-control <%= (typeof errors !== 'undefined' && 'emailId' in errors) ? 'is-invalid' : '' %>" required />
+                                        <% if (typeof errors !== 'undefined' && 'emailId' in errors) { %>
+                                            <div class="invalid-feedback">
+                                                <% if (errors['emailId'].length >= 1) { %>
+                                                    <%= errors['emailId'][0] %>
+                                                <% } %> 
+                                            </div>
+                                        <% } %>
+                                </div>
                             </div>
-                            <div class="d-flex justify-content-md-between">
-                                <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
                                     <label for="password" class="form-label">Password </label>
                                     <input id="password" name="password" type="password" 
                                         value="<%= typeof form !== 'undefined' ? form.password : '' %>"
@@ -92,7 +96,7 @@
                                             </div>
                                         <% } %>
                                 </div>
-                                <div class="form-group confirm-password">
+                                <div class="col-md-6 form-group confirm-password">
                                     <label for="passwordConfirmation" class="form-label">Confirm Password </label>
                                     <input id="passwordConfirmation" name="passwordConfirmation" type="password"
                                         value="<%= typeof form !== 'undefined' ? form.passwordConfirmation : '' %>"
@@ -106,24 +110,39 @@
                                         <% } %>
                                 </div>
                             </div>
-                            <div class="d-flex flex-column">
-                                <button type="submit" class="btn btn-lg btn-primary">Register Now!</button>
+                            <div class="row pt-4">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-lg btn-primary w-100">Register Now!</button>
+                                </div>
                             </div>
                         </form>
                     </div>
-                    <div class="d-flex flex-column container login">
-                        <h4>Have An Account? Log in Now!</h4>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <h4 class="col">Have An Account? Log in Now!</h4>
+                        </div>
+                        <% if (typeof errors !== 'undefined' && ['loginEmailId', 'loginPassword', 'message'].some(r => r in errors)) { %>
+                            <div class="alert alert-danger text-center mt-1">Invalid username and/or password.</div>
+                        <% } %> 
                         <form class="form-login" action="/api/login" method="POST" novalidate>
-                            <div class="form-group">
-                                <label for="emailId" class="form-label">Email ID </label>
-                                <input id="emailId" type="email" class="form-control" />
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="loginEmailId" class="form-label">Email ID </label>
+                                    <input id="loginEmailId" name="loginEmailId" type="email"
+                                        value="<%= typeof form !== 'undefined' ? form.loginEmailId : '' %>"
+                                        class="form-control <%= (typeof errors !== 'undefined' && ['loginEmailId', 'loginPassword', 'message'].some(r => r in errors)) ? 'is-invalid' : '' %>" />
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="password" class="form-label">Password </label>
-                                <input id="password" type="password" class="form-control" />
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="loginPassword" class="form-label">Password </label>
+                                    <input id="loginPassword" name="loginPassword" type="password" class="form-control <%= (typeof errors !== 'undefined' && ['loginEmailId', 'loginPassword', 'message'].some(r => r in errors)) ? 'is-invalid' : '' %>" />
+                                </div>
                             </div>
-                            <div class="d-flex flex-column">
-                                <button type="submit" class="btn btn-lg btn-primary"> Login </button>
+                            <div class="row pt-4">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-lg btn-primary w-100"> Login </button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -132,5 +151,4 @@
         </div>
     </div>
 </body>
-
 </html>
