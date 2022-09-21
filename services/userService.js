@@ -1,11 +1,11 @@
 // @ts-nocheck
 var UserModel = require('../models/user').UserModel;
 
-async function create(fullname, type, email, password) {
+async function create(fullname, type, emailId, password) {
     const user = new UserModel({
         fullname: fullname,
         type: type,
-        email: email,
+        emailId: emailId,
         password: password
     });
 
@@ -32,13 +32,13 @@ async function findById(id) {
 }
 
 
-async function findByEmail(email) {
-    return await UserModel.findOne({ email });
+async function findByEmailId(emailId) {
+    return await UserModel.findOne({ emailId });
 }
 
-async function login(email, password) {
+async function login(emailId, password) {
     let loginResult = true;
-    const user = await UserModel.findOne({ email: email });
+    const user = await findByEmailId(emailId);
 
     if (user) {
         loginResult = await user.validatePassword(password);
@@ -49,7 +49,7 @@ async function login(email, password) {
     return user;
 }
 
-async function update(id, fullname, type, email, password) {
+async function update(id, fullname, type, emailId, password) {
     try {
         let foundUsers = await findById(id);
         if (!foundUsers) throw `User with id '${id}' not found.`;
@@ -57,7 +57,7 @@ async function update(id, fullname, type, email, password) {
         const userData = {
             fullname: fullname,
             type: type,
-            email: email,
+            emailId: emailId,
             password: password
         };
         const validateUserData = new UserModel(userData);
@@ -93,7 +93,7 @@ module.exports = {
     create,
     findAll,
     findById,
-    findByEmail,
+    findByEmailId,
     login,
     update,
     deleteUser

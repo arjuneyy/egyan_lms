@@ -13,14 +13,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Fullname is required.'],
     },
     type: {
-        type: String,
-        required: [true, 'User type is required.'],
-        enum: {
-            values: ['Instructor', 'Student'],
-            message: '{VALUE} is not a supported user type.'
-        }
+        type: Number,
+        required: [true, 'User type is required.']
     },
-    email: {
+    emailId: {
         type: String,
         required: [true, 'Email address is required.'],
         unique: true,

@@ -6,7 +6,7 @@ var userService = require('../services/userService');
 
 // User Login
 router.post('/login', (req, res) => {
-    userService.login(req.body.email, req.body.password)
+    userService.login(req.body.emailId, req.body.password)
         .then((user) => {
             res.send({
                 'result': user,
@@ -25,7 +25,6 @@ router.get('/users', (req, res) => {
 // User Registration
 // Must implement GET? and POST
 router.post('/register', (req, res) => {
-    console.log("BODY:-", req.body);
     const { fullname, type, email, password } = req.body
     userService.create(fullname, type, email, password)
         .then((user) => res.send({

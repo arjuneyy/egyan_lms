@@ -16,16 +16,15 @@ const registrationValidation = [
         .isLength({ min: 4 })
         .withMessage('Fullname must be atleast 4+ characters long.'),
     check('type')
-        .trim()
         .notEmpty()
         .withMessage('Type is required.'),
-    check('email')
+    check('emailId')
         .notEmpty()
         .withMessage('Email is required.')
         .isEmail()
         .withMessage('Must be a valid email.')
         .custom(async (email) => {
-            const existingUser = await userService.findByEmail(email);
+            const existingUser = await userService.findByEmailId(email);
             if (existingUser) {
                 throw new Error('Email already in use.')
             } else {
@@ -67,8 +66,8 @@ router.post('/register', registrationValidation, (req, res) => {
             }
         });
     } else {
-        const { fullname, type, email, password } = req.body
-        userService.create(fullname, type, email, password)
+        const { fullname, type, emailId, password } = req.body
+        userService.create(fullname, type, emailId, password)
             .then((user) => res.render('pages/home', { showSwal: true, message: 'User has been registered.' }))
             .catch((errors) => {
                 var mappedErrors = {};

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <%- include('../partials/alert.ejs');%>
+    <%- include('../partials/alert.ejs'); %>
 
         <header class="p-3 text-bg-dark">
             <div class="d-flex flex-wrap align-items-center justify-content-center">
@@ -33,7 +33,7 @@
                     <div class="d-flex justify-content-xl-center space-between p-4 ">
                         <div class="d-flex flex-column container sign-up">
                             <h4>New to EGyan? Sign up for free!</h4>
-                            <form class="form-signin" action="/register" method="POST" novalidate>
+                            <form class="form-signin" action="/api/register" method="POST" novalidate>
                                 <div class="d-flex justify-content-md-between space-between">
                                     <div class="form-group">
                                         <label for="fullname" class="form-label">Full name </label>
@@ -51,28 +51,29 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="type" class="form-label">Type </label>
-                                    <input id="type" name="type" type="text" 
-                                        value="<%= typeof form !== 'undefined' ? form.type : '' %>"
-                                        class="form-control <%= (typeof errors !== 'undefined' && 'type' in errors) ? 'is-invalid' : '' %>" required />
-                                        <% if (typeof errors !== 'undefined' && 'type' in errors) { %>
-                                            <div class="invalid-feedback">
-                                                <% if (errors['type'].length >= 1) { %>
-                                                    <%= errors['type'][0] %>
-                                                <% } %> 
-                                            </div>
-                                        <% } %>
+                                    <select class="form-select <%= (typeof errors !== 'undefined' && 'type' in errors) ? 'is-invalid' : '' %>" name="type"required>
+                                        <option <%= typeof form !== 'undefined' && form.type === '1' ? 'selected' : '' %> value="1">Instructor</option>
+                                        <option <%= typeof form !== 'undefined' && form.type === '2' ? 'selected' : '' %> value="2">Student</option>
+                                    </select>
+                                    <% if (typeof errors !== 'undefined' && 'type' in errors) { %>
+                                        <div class="invalid-feedback">
+                                            <% if (errors['type'].length >= 1) { %>
+                                                <%= errors['type'][0] %>
+                                            <% } %> 
+                                        </div>
+                                    <% } %>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">Email ID </label>
-                                <input id="email" name="email" type="email"
-                                    value="<%= typeof form !== 'undefined' ? form.email : '' %>"
+                                <input id="email" name="emailId" type="email"
+                                    value="<%= typeof form !== 'undefined' ? form.emailId : '' %>"
                                     placeholder="you@example.com" 
-                                    class="form-control <%= (typeof errors !== 'undefined' && 'email' in errors) ? 'is-invalid' : '' %>" required />
-                                    <% if (typeof errors !== 'undefined' && 'email' in errors) { %>
+                                    class="form-control <%= (typeof errors !== 'undefined' && 'emailId' in errors) ? 'is-invalid' : '' %>" required />
+                                    <% if (typeof errors !== 'undefined' && 'emailId' in errors) { %>
                                         <div class="invalid-feedback">
-                                            <% if (errors['email'].length >= 1) { %>
-                                                <%= errors['email'][0] %>
+                                            <% if (errors['emailId'].length >= 1) { %>
+                                                <%= errors['emailId'][0] %>
                                             <% } %> 
                                         </div>
                                     <% } %>
@@ -112,10 +113,10 @@
                     </div>
                     <div class="d-flex flex-column container login">
                         <h4>Have An Account? Log in Now!</h4>
-                        <form>
+                        <form class="form-login" action="/api/login" method="POST" novalidate>
                             <div class="form-group">
-                                <label for="email" class="form-label">Email ID </label>
-                                <input id="loginEmail" type="text" class="form-control" />
+                                <label for="emailId" class="form-label">Email ID </label>
+                                <input id="emailId" type="email" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="password" class="form-label">Password </label>
