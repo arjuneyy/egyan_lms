@@ -1,0 +1,7 @@
+<% if (typeof showSwal !== 'undefined' && showSwal) { %>
+    <script>
+        swal("<%= typeof message !== 'undefined' ? message : 'Success' %>", {
+            icon: "<%= typeof swaltype !== 'undefined' ? swaltype : 'success' %>"
+        });
+    </script>
+<% } %>

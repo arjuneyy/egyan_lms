@@ -9,45 +9,39 @@
 </head>
 
 <body>
-    <% if (typeof isSuccess !== 'undefined' && isSuccess) { %>
-        <script>
-            swal("User has been registered", {
-                icon: "success"
-            });
-        </script>
-    <% } %>
+    <%- include('../partials/alert.ejs');%>
 
-    <header class="p-3 text-bg-dark">
-        <div class="d-flex flex-wrap align-items-center justify-content-center">
-            <h4>
-                <a href="/" class="d-flex align-items-center text-white text-decoration-none">
-                    EGyan
-                </a>
-            </h4>
+        <header class="p-3 text-bg-dark">
+            <div class="d-flex flex-wrap align-items-center justify-content-center">
+                <h4>
+                    <a href="/" class="d-flex align-items-center text-white text-decoration-none">
+                        EGyan
+                    </a>
+                </h4>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a href="#" class="nav-link px-2 text-secondary">Login</a></li>
-                <li><a href="#" class="nav-link px-2 text-secondary">My Dashboard</a></li>
-            </ul>
-        </div>
-    </header>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="#" class="nav-link px-2 text-secondary">Login</a></li>
+                    <li><a href="#" class="nav-link px-2 text-secondary">My Dashboard</a></li>
+                </ul>
+            </div>
+        </header>
 
-    <div class="wrapper bg-light">
-        <div class="d-flex flex-wrap justify-content-center p-4">
-            <div class="card sign-up-card">
-                <div class="d-flex justify-content-xl-center space-between p-4 ">
-                    <div class="d-flex flex-column container sign-up">
-                        <h4>New to EGyan? Sign up for free!</h4>
-                        <form class="form-signin" action="/register" method="POST" novalidate>
-                            <div class="d-flex justify-content-md-between space-between">
-                                <div class="form-group">
-                                    <label for="fullname" class="form-label">Full name </label>
-                                    <input id="fullname" name="fullname" type="text"
-                                        value="<%= typeof form !== 'undefined' ? form.fullname : '' %>"
-                                        class="form-control <%= (typeof errors !== 'undefined' && 'fullname' in errors) ? 'is-invalid' : '' %>"
-                                        required />
-                                    <% if (typeof errors !== 'undefined' && 'fullname' in errors) { %>
+        <div class="wrapper bg-light">
+            <div class="d-flex flex-wrap justify-content-center p-4">
+                <div class="card sign-up-card">
+                    <div class="d-flex justify-content-xl-center space-between p-4 ">
+                        <div class="d-flex flex-column container sign-up">
+                            <h4>New to EGyan? Sign up for free!</h4>
+                            <form class="form-signin" action="/register" method="POST" novalidate>
+                                <div class="d-flex justify-content-md-between space-between">
+                                    <div class="form-group">
+                                        <label for="fullname" class="form-label">Full name </label>
+                                        <input id="fullname" name="fullname" type="text"
+                                            value="<%= typeof form !== 'undefined' ? form.fullname : '' %>"
+                                            class="form-control <%= (typeof errors !== 'undefined' && 'fullname' in errors) ? 'is-invalid' : '' %>"
+                                            required />
+                                        <% if (typeof errors !== 'undefined' && 'fullname' in errors) { %>
                                         <div class="invalid-feedback">
                                             <% if (errors['fullname'].length >= 1) { %>
                                                 <%= errors['fullname'][0] %>

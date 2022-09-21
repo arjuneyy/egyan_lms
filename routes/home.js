@@ -69,7 +69,7 @@ router.post('/register', registrationValidation, (req, res) => {
     } else {
         const { fullname, type, email, password } = req.body
         userService.create(fullname, type, email, password)
-            .then((user) => res.render('pages/home', { isSuccess: true }))
+            .then((user) => res.render('pages/home', { showSwal: true, message: 'User has been registered.' }))
             .catch((errors) => {
                 var mappedErrors = {};
                 errors.forEach(err => {
@@ -87,7 +87,6 @@ router.post('/register', registrationValidation, (req, res) => {
                     }
                 })
             });
-
     }
 });
 

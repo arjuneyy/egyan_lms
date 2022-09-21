@@ -1,21 +1,19 @@
 // @ts-nocheck
 var UserModel = require('../models/user').UserModel;
-var passwordService = require('../services/passwordService');
-
 
 async function create(fullname, type, email, password) {
     const user = new UserModel({
         fullname: fullname,
         type: type,
         email: email,
-        password: await passwordService.hash(password)
+        password: password
     });
 
     try {
         return await user.save();
     } catch (err) {
         if (err.name === 'ValidationError') {
-            error = Object.values(err.errors).map(val => {
+            var error = Object.values(err.errors).map(val => {
                 return { 'value': val.value, 'path': val.path, 'msg': val.properties.message };
             });
             throw error;
@@ -43,7 +41,7 @@ async function login(email, password) {
     const user = await UserModel.findOne({ email: email });
 
     if (user) {
-        loginResult = await passwordService.verify(password, user.password);
+        loginResult = await user.validatePassword(password);
     }
 
     if (!user || !loginResult) throw 'Invalid email and/or password.';
