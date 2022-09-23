@@ -12,4 +12,7 @@ function connect() {
         .catch(err => console.log(err));
 }
 
-module.exports.connect = connect;
+module.exports = {
+    connect,
+    url
+}

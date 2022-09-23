@@ -63,6 +63,10 @@ router.get('/register', (req, res) => {
     res.render('pages/home');
 });
 
+router.get('/login', (req, res) => {
+    res.render('pages/home');
+});
+
 
 router.post('/register', registrationValidation, (req, res) => {
     var errors = {};
@@ -127,10 +131,11 @@ router.post('/login', loginValidation, (req, res) => {
     } else {
         userService.login(req.body.loginEmailId, req.body.loginPassword)
             .then((user) => {
-                res.send({
-                    'result': user,
-                    'message': 'Successfully logged in.'
-                });
+                req.session.fullname = user.fullname;
+                req.session.emailId = user.emailId;
+                req.session.isAuthenticated = true;
+
+                res.redirect('/api/dashboard');
             })
             .catch((error) => {
                 res.render('pages/home', {
