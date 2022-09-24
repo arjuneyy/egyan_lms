@@ -1,11 +1,14 @@
 var express = require('express');
 var router = express.Router();
+const courseService = require('../services/courseService')
 
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', async (req, res) => {
+    const courses = await courseService.findAll();
     res.render('pages/dashboard', {
         user: {
             fullname: req.session.fullname
-        }
+        },
+        courses: courses
     });
 });
 

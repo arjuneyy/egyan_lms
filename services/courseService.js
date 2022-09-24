@@ -32,6 +32,12 @@ async function create(name, category, oneLiner, duration, language, description,
     }
 }
 
+async function findAll() {
+    return await CourseModel.find();
+}
+
+
 module.exports = {
-    create
+    create,
+    findAll
 }

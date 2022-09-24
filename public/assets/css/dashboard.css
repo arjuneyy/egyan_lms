@@ -141,6 +141,9 @@ button.logout:hover {
     color: #7386D5 !important;
 }
 
+img.thumbnail {
+    width: 100px;
+}
 
 a.article,
 a.article:hover {
