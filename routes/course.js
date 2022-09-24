@@ -96,9 +96,10 @@ router.put('/updateCourse/:id', (req, res) => {
     res.send({ 'message': `Course with id '${id}' has been updated.` });
 });
 
-router.delete('/deleteCourse/:id', (req, res) => {
-    let id = req.params.id;
-    res.send({ 'message': `Course with id '${id}' has been deleted.` });
+router.get('/deleteCourse/:id', (req, res) => {
+    courseService.deleteCourse(req.params.id)
+        .then((msg) => res.redirect('/api/deleteCourse'))
+        .catch(err => console.log(error));
 });
 
 module.exports = router;

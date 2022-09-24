@@ -20,6 +20,16 @@ router.get('/createCourse', (req, res) => {
     });
 });
 
+router.get('/deleteCourse', async (req, res) => {
+    const courses = await courseService.findAll();
+    res.render('pages/deleteCourse', {
+        user: {
+            fullname: req.session.fullname
+        },
+        courses: courses
+    });
+});
+
 router.post('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/api/login');

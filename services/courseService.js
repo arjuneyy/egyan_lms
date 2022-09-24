@@ -42,9 +42,22 @@ async function findById(id) {
     return await CourseModel.findById(id);
 }
 
+async function deleteCourse(id) {
+    try {
+        let foundCourse = await findById(id);
+        if (!foundCourse) throw `Course with id '${id}' not found.`;
+
+        await CourseModel.deleteOne({ _id: id });
+        return `Course with id '${id}' successfully deleted.`;
+    } catch (err) {
+        throw err;
+    }
+}
+
 
 module.exports = {
     create,
     findAll,
-    findById
+    findById,
+    deleteCourse
 }
