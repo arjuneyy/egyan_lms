@@ -45,7 +45,7 @@ var userRouter = require('./routes/user');
 
 app.use(`${API_PREFIX}/health`, healthRouter);
 // app.use(`${API_PREFIX}`, userRouter);
-// app.use(`${API_PREFIX}`, courseRouter);
+app.use(`${API_PREFIX}`, courseRouter);
 app.use(`${API_PREFIX}`, homeRouter);
 app.use(`${API_PREFIX}`, dashboardRouter);
 
