@@ -49,22 +49,17 @@ async function login(emailId, password) {
     return user;
 }
 
-async function update(id, fullname, type, emailId, password) {
+async function updateProfile(id, fullname, emailId) {
     try {
         let foundUsers = await findById(id);
         if (!foundUsers) throw `User with id '${id}' not found.`;
 
-        const userData = {
+        foundUsers.set({
             fullname: fullname,
-            type: type,
-            emailId: emailId,
-            password: password
-        };
-        const validateUserData = new UserModel(userData);
-        let errors = validateUserData.validateSync();
-        if (errors) throw errors;
+            emailId: emailId
+        });
 
-        return await UserModel.findByIdAndUpdate({ '_id': id }, userData, { new: true });
+        return await foundUsers.save();
     } catch (err) {
         if (err.name === 'ValidationError') {
             error = Object.values(err.errors).map(val => val.message);
@@ -95,6 +90,6 @@ module.exports = {
     findById,
     findByEmailId,
     login,
-    update,
+    updateProfile,
     deleteUser
 }

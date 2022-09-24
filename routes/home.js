@@ -134,6 +134,7 @@ router.post('/login', loginValidation, (req, res) => {
                 req.session.fullname = user.fullname;
                 req.session.emailId = user.emailId;
                 req.session.isAuthenticated = true;
+                req.session.userId = user.id;
 
                 res.redirect('/api/dashboard');
             })
@@ -149,6 +150,99 @@ router.post('/login', loginValidation, (req, res) => {
             })
     }
 });
+
+const changeProfileValidation = [
+    check('fullname')
+        .trim()
+        .notEmpty()
+        .withMessage('Fullname is required.')
+        .isLength({ min: 4 })
+        .withMessage('Fullname must be atleast 4+ characters long.'),
+    check('emailId')
+        .notEmpty()
+        .withMessage('Email is required.')
+        .isEmail()
+        .withMessage('Must be a valid email.')
+        .custom(async (email, { req, loc, path }) => {
+            const existingUser = await userService.findByEmailId(email);
+
+            if (existingUser && existingUser.id !== req.session.userId) {
+                throw new Error('Email already in use.')
+            } else {
+                return true;
+            }
+        })
+]
+
+
+router.put('/changeProfile', changeProfileValidation, (req, res) => {
+    const loginValidationRes = validationResult(req);
+
+    if (!loginValidationRes.isEmpty()) {
+        var errors = {};
+        loginValidationRes.array().forEach(err => {
+            if (err['param'] in errors) {
+                errors[err['param']].push(err['msg']);
+            } else {
+                errors[err['param']] = [err.msg];
+            }
+        });
+
+        res.render('pages/editProfile', {
+            errors: errors,
+            user: {
+                fullname: req.session.fullname,
+            },
+            form: {
+                ...req.body
+            }
+        });
+    } else {
+        const { fullname, emailId } = req.body;
+        userService.updateProfile(req.session.userId, fullname, emailId)
+            .then((user) => {
+                req.session.fullname = user.fullname;
+                req.session.emailId = user.emailId;
+                res.render('pages/editProfile', {
+                    showSwal: true,
+                    message: 'User profile has been updated.',
+                    user: {
+                        fullname: req.session.fullname,
+                    },
+                    form: {
+                        fullname: req.session.fullname,
+                        emailId: req.session.emailId
+                    }
+                })
+            })
+            .catch((errors) => {
+                var mappedErrors = {};
+
+                if (Array.isArray(errors)) {
+                    errors.forEach(err => {
+                        if (err['param'] in errors) {
+                            mappedErrors[err['path']].push(err['msg']);
+                        } else {
+                            mappedErrors[err['path']] = [err.msg];
+                        }
+                    });
+                } else {
+                    throw errors;
+                }
+
+                res.render('pages/editProfile', {
+                    errors: mappedErrors,
+                    user: {
+                        fullname: req.session.fullname,
+                    },
+                    form: {
+                        ...req.body
+                    }
+                })
+            });
+    }
+});
+
 
 
 module.exports = router;

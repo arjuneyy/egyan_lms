@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+    
+<%- include('../partials/head.ejs'); %>
+<body>
+    <%- include('../partials/alert.ejs'); %> 
+    <div class="dashboard-wrapper">
+        <!-- Sidebar  -->
+        <%- include('../partials/sidebar.ejs'); %>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <div class="d-flex flex-wrap justify-content-center p-4">
+                <div class="card sign-up-card p-4 m-2">
+                    <form action="/api/changeProfile?_method=PUT" method="POST" novalidate>
+                        <h2>Change Profile</h2>
+                        <div class="row">
+                            <div class="col-12 form-group ">
+                                <label for="fullname" class="form-label">Full name </label>
+                                <input id="fullname" name="fullname" type="text"
+                                    value="<%= typeof form !== 'undefined' ? form.fullname : '' %>"
+                                    class="form-control <%= (typeof errors !== 'undefined' && 'fullname' in errors) ? 'is-invalid' : '' %>"
+                                    required />
+                                <% if (typeof errors !== 'undefined' && 'fullname' in errors) { %>
+                                        <div class="invalid-feedback">
+                                            <% if (errors['fullname'].length >= 1) { %>
+                                                <%= errors['fullname'][0] %>
+                                            <% } %> 
+                                        </div>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="email" class="form-label">Email ID </label>
+                                <input id="email" name="emailId" type="email"
+                                    value="<%= typeof form !== 'undefined' ? form.emailId : '' %>"
+                                    placeholder="you@example.com" 
+                                    class="form-control <%= (typeof errors !== 'undefined' && 'emailId' in errors) ? 'is-invalid' : '' %>" required />
+                                    <% if (typeof errors !== 'undefined' && 'emailId' in errors) { %>
+                                        <div class="invalid-feedback">
+                                            <% if (errors['emailId'].length >= 1) { %>
+                                                <%= errors['emailId'][0] %>
+                                            <% } %> 
+                                        </div>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="col">
+                                <button type="submit" class="btn btn-md btn-primary w-100">Change Profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card sign-up-card p-4 m-2">
+                    <form action="/api/changePassword?_method=PUT" method="POST" novalidate>
+                        <h2>Change Password</h2>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="newPassword" class="form-label">New Password </label>
+                                <input id="newPassword" name="newPassword" type="password" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="confirmPassword" class="form-label">Confirm Password </label>
+                                <input id="confirmPassword" name="confirmPassword" type="password" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="col">
+                                <button type="submit" class="btn btn-md btn-primary w-100"> Change Password </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

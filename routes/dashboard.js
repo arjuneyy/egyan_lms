@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const courseService = require('../services/courseService')
+const userService = require('../services/userService');
 
 router.get('/dashboard', async (req, res) => {
     const courses = await courseService.findAll();
@@ -41,6 +42,19 @@ router.get('/deleteCourse', async (req, res) => {
         courses: courses
     });
 });
+
+router.get('/editProfile', (req, res) => {
+    res.render('pages/editProfile', {
+        user: {
+            fullname: req.session.fullname,
+        },
+        form: {
+            fullname: req.session.fullname,
+            emailId: req.session.emailId
+        }
+    });
+});
+
 
 router.post('/logout', (req, res) => {
     req.session.destroy();
