@@ -163,7 +163,7 @@ const changeProfileValidation = [
         .withMessage('Email is required.')
         .isEmail()
         .withMessage('Must be a valid email.')
-        .custom(async (email, { req, loc, path }) => {
+        .custom(async (email, { req }) => {
             const existingUser = await userService.findByEmailId(email);
 
             if (existingUser && existingUser.id !== req.session.userId) {
@@ -218,6 +218,89 @@ router.put('/changeProfile', changeProfileValidation, (req, res) => {
             .catch((errors) => {
                 var mappedErrors = {};
 
+                if (Array.isArray(errors)) {
+                    errors.forEach(err => {
+                        if (err['param'] in errors) {
+                            mappedErrors[err['path']].push(err['msg']);
+                        } else {
+                            mappedErrors[err['path']] = [err.msg];
+                        }
+                    });
+                } else {
+                    throw errors;
+                }
+
+                res.render('pages/editProfile', {
+                    errors: mappedErrors,
+                    user: {
+                        fullname: req.session.fullname,
+                    },
+                    form: {
+                        ...req.body
+                    }
+                })
+            });
+    }
+});
+
+const updatePasswordValidation = [
+    check('newPassword')
+        .trim()
+        .notEmpty()
+        .withMessage('Password is required.'),
+    check('confirmPassword')
+        .trim()
+        .notEmpty()
+        .withMessage('Password is required.')
+        .custom((confirmPassword, { req }) => {
+            if (confirmPassword !== req.body.newPassword) {
+                throw new Error('Password must match.')
+            } else {
+                return true;
+            }
+        })
+]
+
+router.put('/changePassword', updatePasswordValidation, (req, res) => {
+    const loginValidationRes = validationResult(req);
+    if (!loginValidationRes.isEmpty()) {
+        var errors = {};
+        loginValidationRes.array().forEach(err => {
+            if (err['param'] in errors) {
+                errors[err['param']].push(err['msg']);
+            } else {
+                errors[err['param']] = [err.msg];
+            }
+        });
+
+        res.render('pages/editProfile', {
+            errors: errors,
+            user: {
+                fullname: req.session.fullname,
+            },
+            form: {
+                ...req.body
+            }
+        });
+    } else {
+        const { newPassword, confirmPassword } = req.body;
+        userService.updatePassword(req.session.userId, newPassword)
+            .then((user) => {
+                req.session.fullname = user.fullname;
+                req.session.emailId = user.emailId;
+                res.render('pages/editProfile', {
+                    showSwal: true,
+                    message: 'Password has been updated.',
+                    user: {
+                        fullname: req.session.fullname,
+                    },
+                    form: {
+                        ...req.body
+                    }
+                })
+            })
+            .catch((errors) => {
+                var mappedErrors = {};
                 if (Array.isArray(errors)) {
                     errors.forEach(err => {
                         if (err['param'] in errors) {

@@ -72,6 +72,23 @@ async function updateProfile(id, fullname, emailId) {
     }
 }
 
+async function updatePassword(id, password) {
+    try {
+        let foundUsers = await findById(id);
+        if (!foundUsers) throw `User with id '${id}' not found.`;
+
+        foundUsers.set({ password: password });
+        return await foundUsers.save();
+    } catch (err) {
+        if (err.name === 'ValidationError') {
+            error = Object.values(err.errors).map(val => val.message);
+            throw error;
+        } else {
+            throw err;
+        }
+    }
+}
+
 async function deleteUser(id) {
     try {
         let foundUsers = await findById(id);
@@ -91,5 +108,6 @@ module.exports = {
     findByEmailId,
     login,
     updateProfile,
+    updatePassword,
     deleteUser
 }

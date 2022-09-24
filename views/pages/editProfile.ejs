@@ -59,13 +59,32 @@
                         <div class="row">
                             <div class="form-group col">
                                 <label for="newPassword" class="form-label">New Password </label>
-                                <input id="newPassword" name="newPassword" type="password" class="form-control" />
+                                <input id="newPassword" name="newPassword" type="password"
+                                    value="<%= typeof form !== 'undefined' ? form.newPassword : '' %>" 
+                                    class="form-control <%= (typeof errors !== 'undefined' && 'newPassword' in errors) ? 'is-invalid' : '' %>" />
+                                <% if (typeof errors !== 'undefined' && 'newPassword' in errors) { %>
+                                    <div class="invalid-feedback">
+                                        <% if (errors['newPassword'].length >= 1) { %>
+                                            <%= errors['newPassword'][0] %>
+                                        <% } %> 
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col">
                                 <label for="confirmPassword" class="form-label">Confirm Password </label>
-                                <input id="confirmPassword" name="confirmPassword" type="password" class="form-control" />
+                                <input id="confirmPassword" name="confirmPassword" type="password" 
+                                    value="<%= typeof form !== 'undefined' ? form.confirmPassword : '' %>" 
+                                    class="form-control <%= (typeof errors !== 'undefined' && 'confirmPassword' in errors) ? 'is-invalid' : '' %>" />
+                                <% if (typeof errors !== 'undefined' && 'confirmPassword' in errors) { %>
+                                    <div class="invalid-feedback">
+                                        <% if (errors['confirmPassword'].length >= 1) { %>
+                                            <%= errors['confirmPassword'][0] %>
+                                        <% } %> 
+                                    </div>
+                                <% } %>
+                            
                             </div>
                         </div>
                         <div class="row pt-4">

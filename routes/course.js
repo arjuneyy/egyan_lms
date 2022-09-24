@@ -62,13 +62,17 @@ router.post('/createCourse', upload.single('image'), courseValidation, (req, res
             .then((course) => res.redirect('dashboard'))
             .catch((errors) => {
                 var mappedErrors = {};
-                errors.forEach(err => {
-                    if (err['param'] in errors) {
-                        mappedErrors[err['path']].push(err['msg']);
-                    } else {
-                        mappedErrors[err['path']] = [err.msg];
-                    }
-                });
+                if (Array.isArray(errors)) {
+                    errors.forEach(err => {
+                        if (err['param'] in errors) {
+                            mappedErrors[err['path']].push(err['msg']);
+                        } else {
+                            mappedErrors[err['path']] = [err.msg];
+                        }
+                    });
+                } else {
+                    throw errors;
+                }
 
                 res.render(createCoursePage, {
                     action: 'POST',

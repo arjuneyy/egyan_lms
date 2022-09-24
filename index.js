@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const authMiddleware = require('./middleware/authentication')
 const methodOverride = require('method-override');
 
+const API_PREFIX = '/api'
 
 const oneHour = 1 * 1 * 60 * 60;
 const sessionConfig = {
@@ -21,8 +22,6 @@ const sessionConfig = {
 
 // Connect mongoDB
 db.connect()
-
-const API_PREFIX = '/api'
 
 // Middleware
 app.use(express.json());
@@ -45,12 +44,8 @@ app.use(methodOverride('_method'));
 // API Routes
 var homeRouter = require('./routes/home');
 var dashboardRouter = require('./routes/dashboard');
-var healthRouter = require('./routes/health');
 var courseRouter = require('./routes/course');
-var userRouter = require('./routes/user');
 
-app.use(`${API_PREFIX}/health`, healthRouter);
-// app.use(`${API_PREFIX}`, userRouter);
 app.use(`${API_PREFIX}`, courseRouter);
 app.use(`${API_PREFIX}`, homeRouter);
 app.use(`${API_PREFIX}`, dashboardRouter);

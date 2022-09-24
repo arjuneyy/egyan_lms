@@ -2,13 +2,10 @@ const authMiddleware = (req, res, next) => {
     const loginPath = '/api/login';
     const dashboardPath = '/api/dashboard';
 
-    // if (req.session.isAuthenticated && req.originalUrl == loginPath) {
-    //     res.redirect(dashboardPath);
-    // } else if (!req.session.isAuthenticated && req.originalUrl !== loginPath) {
-    //     res.redirect(loginPath);
-    // } else {
-    //     next();
-    // }
+    if (req.originalUrl === dashboardPath && !req.session.isAuthenticated) {
+        res.redirect(loginPath);
+    }
+
     next();
 }
 

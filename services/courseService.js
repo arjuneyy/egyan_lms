@@ -80,14 +80,13 @@ async function update(id, name, category, oneLiner, duration, language, descript
         });
         return await foundCourse.save();
     } catch (err) {
+        console.log(err)
         if (err.name === 'ValidationError') {
             error = Object.values(err.errors).map(val => val.message);
             throw error;
         } else {
             throw err;
         }
-
-        console.log(err)
     }
 }
 
