@@ -43,6 +43,11 @@
                         </table>
                         <%- (typeof course !== 'undefined' ? course.description : '')%>
                     </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <a class="btn btn-primary float-right" href="/api/updateCourse/<%= course.id %>">Update Course</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

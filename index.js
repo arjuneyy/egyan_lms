@@ -7,6 +7,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const authMiddleware = require('./middleware/authentication')
+const methodOverride = require('method-override');
+
 
 const oneHour = 1 * 1 * 60 * 60;
 const sessionConfig = {
@@ -37,6 +39,8 @@ app.use(authMiddleware.authMiddleware);
 app.use(authMiddleware.disableCacheMiddleware);
 /* New Route to the TinyMCE Node module */
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+app.use(methodOverride('_method'));
+
 
 // API Routes
 var homeRouter = require('./routes/home');

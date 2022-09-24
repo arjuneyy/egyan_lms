@@ -14,9 +14,21 @@ router.get('/dashboard', async (req, res) => {
 
 router.get('/createCourse', (req, res) => {
     res.render('pages/createCourse', {
+        action: 'POST',
         user: {
             fullname: req.session.fullname
         }
+    });
+});
+
+router.get('/updateCourse/:id', async (req, res) => {
+    const course = await courseService.findById(req.params.id);
+    res.render('pages/createCourse', {
+        action: 'PUT',
+        user: {
+            fullname: req.session.fullname
+        },
+        form: course
     });
 });
 

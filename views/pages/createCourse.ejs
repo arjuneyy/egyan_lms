@@ -10,8 +10,16 @@
         <!-- Page Content  -->
         <div id="content">
             <div class="card p-4">
-                <h2>Create New Course</h2>
-                <form class="form" action="/api/createCourse" enctype="multipart/form-data" method="POST" novalidate>
+                <% 
+                    var actionUrl = (action === 'PUT' ? '/api/updateCourse/' + form.id + '?_method=PUT' : '/api/createCourse');
+                    var title = (action === 'PUT' ? 'Update Course' : 'Create New Course') ;   
+                %>
+                <h2><%= title %></h2>
+                <form class="form" 
+                    action="<%= actionUrl %>" 
+                    enctype="multipart/form-data" 
+                    method="POST" 
+                    novalidate>
                     <div class="row">
                         <div class="form-group col-md-8">
                             <label for="name" class="form-label">Full name </label>
@@ -102,7 +110,9 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-12 clearfix">
-                            <button class="btn btn-primary float-right">Create New Course</button>
+                            <button class="btn btn-primary float-right">
+                                <%= (action==='PUT' ? 'Update Course' : 'Create New Course') %>
+                            </button>
                         </div>
                     </div>
                 </form>

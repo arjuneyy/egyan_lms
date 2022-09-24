@@ -54,10 +54,48 @@ async function deleteCourse(id) {
     }
 }
 
+async function update(id, name, category, oneLiner, duration, language, description, lessons, photoBuffer) {
+    try {
+        let foundCourse = await findById(id);
+        if (!foundCourse) throw `Course with id '${id}' not found.`;
+
+        if (photoBuffer) {
+            photoBuffer = {
+                data: photoBuffer,
+                contentType: 'image/png'
+            }
+        } else {
+            photoBuffer = foundCourse.photo;
+        }
+
+        foundCourse.set({
+            name: name,
+            category: category,
+            oneLiner: oneLiner,
+            duration: duration,
+            language: language,
+            description: description,
+            lessons: lessons,
+            photo: photoBuffer
+        });
+        return await foundCourse.save();
+    } catch (err) {
+        if (err.name === 'ValidationError') {
+            error = Object.values(err.errors).map(val => val.message);
+            throw error;
+        } else {
+            throw err;
+        }
+
+        console.log(err)
+    }
+}
+
 
 module.exports = {
     create,
     findAll,
     findById,
-    deleteCourse
+    deleteCourse,
+    update
 }
