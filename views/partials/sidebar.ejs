@@ -1,0 +1,42 @@
+<nav id="sidebar" class="text-bg-dark">
+    <div class="sidebar-header">
+        <h3>
+            Welcome <%= (typeof user !=='undefined' ? user.fullname : '' ); %>
+        </h3>
+    </div>
+
+    <ul class="list-unstyled components" id="components">
+        <li class="active">
+            <a href="/api/dashboard"> <i class="fas fa-home"></i> Dashboard</a>
+        </li>
+        <li>
+            <a href="#coursesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                    class="fas fa-book"></i> Manage Courses</a>
+            <ul class="collapse list-unstyled" id="coursesSubmenu">
+                <li>
+                    <a href="#">Create Course</a>
+                </li>
+                <li>
+                    <a href="#">Delete Course</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#"> <i class="fas fa-sticky-note"></i> Manage Lessons</a>
+        </li>
+        <li>
+            <a href="#"> <i class="fas fa-download"></i> Manage Course Material</a>
+        </li>
+        <li>
+            <a href="#"> <i class="fas fa-user"></i> Edit Profile</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            <form action="/api/logout" method="POST">
+                <button class="btn w-100 logout">Logout</button>
+            </form>
+        </li>
+    </ul>
+</nav>

@@ -4,7 +4,6 @@ $(function () {
     });
 
     $('li').on('click', function (e) {
-        e.stopPropagation();
         $(".active").removeClass("active");
         $(this).addClass("active");
     });
