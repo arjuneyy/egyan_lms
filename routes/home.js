@@ -56,15 +56,15 @@ const loginValidation = [
 ];
 
 router.get('/', (req, res) => {
-    res.render('pages/home');
+    res.render('pages/register');
 });
 
 router.get('/register', (req, res) => {
-    res.render('pages/home');
+    res.render('pages/register');
 });
 
 router.get('/login', (req, res) => {
-    res.render('pages/home');
+    res.render('pages/register');
 });
 
 
@@ -79,7 +79,7 @@ router.post('/register', registrationValidation, (req, res) => {
             }
         });
 
-        res.render('pages/home', {
+        res.render('pages/register', {
             errors: errors,
             form: {
                 ...req.body
@@ -88,7 +88,7 @@ router.post('/register', registrationValidation, (req, res) => {
     } else {
         const { fullname, type, emailId, password } = req.body
         userService.create(fullname, type, emailId, password)
-            .then((user) => res.render('pages/home', { showSwal: true, message: 'User has been registered.' }))
+            .then((user) => res.render('pages/register', { showSwal: true, message: 'User has been registered.' }))
             .catch((errors) => {
                 var mappedErrors = {};
                 errors.forEach(err => {
@@ -99,7 +99,7 @@ router.post('/register', registrationValidation, (req, res) => {
                     }
                 });
 
-                res.render('pages/home', {
+                res.render('pages/register', {
                     errors: mappedErrors,
                     form: {
                         ...req.body
@@ -122,7 +122,7 @@ router.post('/login', loginValidation, (req, res) => {
             }
         });
 
-        res.render('pages/home', {
+        res.render('pages/register', {
             errors: errors,
             form: {
                 ...req.body
@@ -138,7 +138,7 @@ router.post('/login', loginValidation, (req, res) => {
                 res.redirect('/api/dashboard');
             })
             .catch((error) => {
-                res.render('pages/home', {
+                res.render('pages/register', {
                     errors: {
                         message: error,
                         form: {
