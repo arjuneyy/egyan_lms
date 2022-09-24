@@ -145,6 +145,10 @@ img.thumbnail {
     width: 100px;
 }
 
+.float-right {
+    float: right;
+}
+
 a.article,
 a.article:hover {
     background: #6d7fcc !important;

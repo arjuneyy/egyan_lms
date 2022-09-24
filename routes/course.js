@@ -32,7 +32,7 @@ const courseValidation = [
 ];
 
 
-router.post('/createCourse', [courseValidation, upload.single('image')], (req, res) => {
+router.post('/createCourse', upload.single('image'), courseValidation, (req, res) => {
     var errors = {};
     if (!validationResult(req).isEmpty()) {
         validationResult(req).array().forEach(err => {
@@ -51,10 +51,14 @@ router.post('/createCourse', [courseValidation, upload.single('image')], (req, r
         });
     } else {
         const { name, category, oneLiner, duration, language, description, lessons } = req.body
-        imageBuffer = fs.readFileSync(path.join('./uploads', req.file.filename));
+        imageBuffer = null;
+
+        if (req.file && 'filename' in req.file) {
+            imageBuffer = fs.readFileSync(path.join('./uploads', req.file.filename));
+        }
 
         courseService.create(name, category, oneLiner, duration, language, description, lessons, imageBuffer)
-            .then((course) => res.render('pages/dashboard', { showSwal: true, message: 'Course has been created.' }))
+            .then((course) => res.redirect('dashboard'))
             .catch((errors) => {
                 var mappedErrors = {};
                 errors.forEach(err => {
@@ -65,8 +69,6 @@ router.post('/createCourse', [courseValidation, upload.single('image')], (req, r
                     }
                 });
 
-                console.log(errors)
-
                 res.render(createCoursePage, {
                     errors: mappedErrors,
                     form: {
@@ -75,7 +77,6 @@ router.post('/createCourse', [courseValidation, upload.single('image')], (req, r
                 })
             });
     }
-    res.send({ 'message': 'Course has been created.' });
 });
 
 router.get('/viewCourse', (req, res) => {

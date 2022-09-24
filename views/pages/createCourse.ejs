@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+    
+<%- include('../partials/head.ejs'); %>
+<body>
+    <%- include('../partials/alert.ejs'); %> 
+    <div class="dashboard-wrapper">
+        <!-- Sidebar  -->
+        <%- include('../partials/sidebar.ejs'); %>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <div class="card p-4">
+                <h2>Create New Course</h2>
+                <form class="form" action="/api/createCourse" enctype="multipart/form-data" method="POST" novalidate>
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                            <label for="name" class="form-label">Full name </label>
+                            <input id="name" name="name" type="text"
+                                value="<%= typeof form !== 'undefined' ? form.name : '' %>"
+                                class="form-control <%= (typeof errors !== 'undefined' && 'name' in errors) ? 'is-invalid' : '' %>"
+                                required />
+                            <% if (typeof errors !== 'undefined' && 'name' in errors) { %>
+                                    <div class="invalid-feedback">
+                                        <% if (errors['name'].length >= 1) { %>
+                                            <%= errors['name'][0] %>
+                                        <% } %> 
+                                    </div>
+                                <% } %>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="category" class="form-label">Category </label>
+                            <select class="form-select <%= (typeof errors !== 'undefined' && 'category' in errors) ? 'is-invalid' : '' %>" name="category"required>
+                                <option <%= typeof form !== 'undefined' && form.category === 'Web Development' ? 'selected' : '' %> value="Web Development">Web Development</option>
+                                <option <%= typeof form !== 'undefined' && form.category === 'Programming Language' ? 'selected' : '' %> value="Programming Languange">Programming Languange</option>
+                            </select>
+                            <% if (typeof errors !== 'undefined' && 'category' in errors) { %>
+                                <div class="invalid-feedback">
+                                    <% if (errors['category'].length >= 1) { %>
+                                        <%= errors['category'][0] %>
+                                    <% } %> 
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="oneLiner" class="form-label">One Liner </label>
+                            <input id="oneLiner" name="oneLiner" type="text"
+                                value="<%= typeof form !== 'undefined' ? form.oneLiner : '' %>"
+                                class="form-control <%= (typeof errors !== 'undefined' && 'oneLiner' in errors) ? 'is-invalid' : '' %>"
+                                required />
+                            <% if (typeof errors !== 'undefined' && 'oneLiner' in errors) { %>
+                                    <div class="invalid-feedback">
+                                        <% if (errors['oneLiner'].length >= 1) { %>
+                                            <%= errors['oneLiner'][0] %>
+                                        <% } %> 
+                                    </div>
+                                <% } %>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="duration" class="form-label">Duration in Hours </label>
+                            <input id="duration" name="duration" type="text"
+                                value="<%= typeof form !== 'undefined' ? form.duration : '' %>"
+                                class="form-control <%= (typeof errors !== 'undefined' && 'duration' in errors) ? 'is-invalid' : '' %>"
+                                required />
+                            <% if (typeof errors !== 'undefined' && 'duration' in errors) { %>
+                                    <div class="invalid-feedback">
+                                        <% if (errors['duration'].length >= 1) { %>
+                                            <%= errors['duration'][0] %>
+                                        <% } %> 
+                                    </div>
+                                <% } %>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="language" class="form-label">Language </label>
+                            <input id="language" name="language" type="text"
+                                value="<%= typeof form !== 'undefined' ? form.language : '' %>"
+                                class="form-control <%= (typeof errors !== 'undefined' && 'language' in errors) ? 'is-invalid' : '' %>"
+                                required />
+                            <% if (typeof errors !== 'undefined' && 'language' in errors) { %>
+                                    <div class="invalid-feedback">
+                                        <% if (errors['language'].length >= 1) { %>
+                                            <%= errors['language'][0] %>
+                                        <% } %> 
+                                    </div>
+                                <% } %>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="image" class="form-label">Upload Cover Photo </label>
+                            <input id="image" name="image" type="file"
+                                value="<%= typeof form !== 'undefined' ? form.image : '' %>"
+                                class="form-control "/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="description" class="form-label">Description </label>
+                            <textarea id="description" name="description" ><%= typeof form !== 'undefined' ? form.description : '' %></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 clearfix">
+                            <button class="btn btn-primary float-right">Create New Course</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

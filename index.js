@@ -35,6 +35,8 @@ app.use(cookieParser());
 app.use(session(sessionConfig));
 app.use(authMiddleware.authMiddleware);
 app.use(authMiddleware.disableCacheMiddleware);
+/* New Route to the TinyMCE Node module */
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // API Routes
 var homeRouter = require('./routes/home');

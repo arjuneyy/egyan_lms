@@ -12,6 +12,14 @@ router.get('/dashboard', async (req, res) => {
     });
 });
 
+router.get('/createCourse', (req, res) => {
+    res.render('pages/createCourse', {
+        user: {
+            fullname: req.session.fullname
+        }
+    });
+});
+
 router.post('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/api/login');

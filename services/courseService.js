@@ -1,9 +1,14 @@
 // @ts-nocheck
 const CourseModel = require('../models/course').CourseModel;
-const fs = require('fs');
 
 
 async function create(name, category, oneLiner, duration, language, description, lessons, photoBuffer) {
+    if (photoBuffer) {
+        photoBuffer = {
+            data: photoBuffer,
+            contentType: 'image/png'
+        }
+    }
     const course = new CourseModel({
         name: name,
         category: category,
@@ -12,10 +17,7 @@ async function create(name, category, oneLiner, duration, language, description,
         language: language,
         description: description,
         lessons: lessons,
-        photo: {
-            data: photoBuffer,
-            contentType: 'image/png'
-        }
+        photo: photoBuffer
     });
 
     try {

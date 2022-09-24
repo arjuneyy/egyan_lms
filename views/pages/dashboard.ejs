@@ -27,8 +27,12 @@
                         <tr>
                             <th class="align-middle" scope="row"><%=cnt + 1%></th>
                             <td class="align-middle">
-                                <img class="thumbnail" src="data:image/<%=course.photo.contentType%>;base64,
-                                    <%=course.photo.data.toString('base64')%>">
+                                <% if (course.photo.contentType) { %>
+                                    <img class="thumbnail" src="data:image/<%=course.photo.contentType%>;base64,
+                                        <%=course.photo.data.toString('base64')%>">
+                                <% } else { %>
+                                    <img class="thumbnail" src="/public/assets/img/no_image.png" alt="no-image">
+                                <% } %>
                             </td>
                             <td class="align-middle"><%= course.name %> </td>
                             <td class="align-middle"><%= course.category %> </td>
