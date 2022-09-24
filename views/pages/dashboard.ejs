@@ -28,16 +28,16 @@
                             <th class="align-middle" scope="row"><%=cnt + 1%></th>
                             <td class="align-middle">
                                 <% if (course.photo.contentType) { %>
-                                    <img class="thumbnail" src="data:image/<%=course.photo.contentType%>;base64,
+                                    <img class="thumbnail img-fluid " src="data:image/<%=course.photo.contentType%>;base64,
                                         <%=course.photo.data.toString('base64')%>">
                                 <% } else { %>
-                                    <img class="thumbnail" src="/public/assets/img/no_image.png" alt="no-image">
+                                    <img class="thumbnail img-fluid " src="/public/assets/img/no_image.png" alt="no-image">
                                 <% } %>
                             </td>
                             <td class="align-middle"><%= course.name %> </td>
                             <td class="align-middle"><%= course.category %> </td>
                             <td class="align-middle"><%= course.duration %> </td>
-                            <td class="align-middle"><button class="btn btn-xs btn-primary">View</button></td>
+                            <td class="align-middle"><a class="btn btn-xs btn-primary" href="/api/viewCourse?id=<%=course.id%>">View</a></td>
                         </tr>
                     <% }); %> 
                 </tbody>

@@ -145,6 +145,11 @@ img.thumbnail {
     width: 100px;
 }
 
+
+img.thumbnail-1 {
+    width: 200px;
+}
+
 .float-right {
     float: right;
 }

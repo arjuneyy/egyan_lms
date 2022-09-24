@@ -38,8 +38,13 @@ async function findAll() {
     return await CourseModel.find();
 }
 
+async function findById(id) {
+    return await CourseModel.findById(id);
+}
+
 
 module.exports = {
     create,
-    findAll
+    findAll,
+    findById
 }

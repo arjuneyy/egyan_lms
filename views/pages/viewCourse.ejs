@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+    
+<%- include('../partials/head.ejs'); %>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar  -->
+        <%- include('../partials/sidebar.ejs'); %>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <div class="card p-4">
+                <div class="row">
+                    <div class="col-12">
+                        <% if (course.photo.contentType) { %>
+                            <img class="thumbnail-1" src="data:image/<%=course.photo.contentType%>;base64,
+                                <%=course.photo.data.toString('base64')%>">
+                        <% } else { %>
+                            <img class="thumbnail-1" src="/public/assets/img/no_image.png" alt="no-image">
+                        <% } %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h2><%= (typeof course !== 'undefined' ? course.name : '')%> </h2>
+                        <table class="table">
+                            <tr>
+                                <th>Category</th>
+                                <td><%=(typeof course !== 'undefined' ? course.category : '')%></td>
+                            </tr>
+                            <tr>
+                                <th>One Liner</th>
+                                <td><%=(typeof course !== 'undefined' ? course.oneLiner : '')%></td>
+                            </tr>
+                            <tr>
+                                <th>Duration in Hours</th>
+                                <td><%=(typeof course !== 'undefined' ? course.duration : '')%></td>
+                            </tr>
+                            <tr>
+                                <th>Programming Language</th>
+                                <td><%=(typeof course !== 'undefined' ? course.language : '')%></td>
+                            </tr>
+                        </table>
+                        <%- (typeof course !== 'undefined' ? course.description : '')%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

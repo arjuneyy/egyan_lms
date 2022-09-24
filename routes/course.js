@@ -79,8 +79,11 @@ router.post('/createCourse', upload.single('image'), courseValidation, (req, res
     }
 });
 
-router.get('/viewCourse', (req, res) => {
-    res.send({ 'data': [], 'message': 'List of courses.' });
+router.get('/viewCourse', async (req, res) => {
+    const course = await courseService.findById(req.query.id);
+    res.render('pages/viewCourse', {
+        course: course
+    });
 });
 
 router.get('/viewCourse/:id', (req, res) => {
